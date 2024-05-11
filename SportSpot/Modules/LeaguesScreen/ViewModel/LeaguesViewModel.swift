@@ -7,27 +7,27 @@
 
 import Foundation
 
-class LeaguesViewModel {
-    var leaguesViewModel : LeaguesViewModel?
+protocol PassSportsType {
+    func passValueToleagueScreen(value: Int)
+}
+
+class LeaguesViewModel: PassSportsType {
     var network : NetworkService
     var bindLeaguesToViewController : (()->()) = {}
     
-    var Footballleagues : [League]?
-    var Basketballleagues : [BasketBall]?
-    var tennisleagues : [TennisLeague]?
-    var cricketleagues : [Cricket]?
+    var leagues : [League]?
     var resultToSearch : Int?
     
     init(network:NetworkService){
         self.network = network
     }
     
-    func loadFootballLeagues(from url : String ){
-        network.fetchFootballLeagues(url: url) { [weak self] result in
+    func loadLeagues(from sportType: SportType){
+        network.fetchLeagues(from: sportType) { [weak self] result in
             switch result{
             case .success(let leaguesResponse):
                 DispatchQueue.main.async{
-                    self?.Footballleagues = leaguesResponse.result
+                    self?.leagues = leaguesResponse.result
                     self?.bindLeaguesToViewController()
                 }
             case .failure(_):
@@ -35,25 +35,11 @@ class LeaguesViewModel {
             }
         }
     }
-    func loadTennisLeagues(from url : String ){
-        network.fetchTennisLeagues(url: url) { [weak self] result in
-            switch result{
-            case .success(let leaguesResponse):
-                DispatchQueue.main.async{
-                    self?.tennisleagues = leaguesResponse.result
-                    self?.bindLeaguesToViewController()
-                }
-            case .failure(_):
-                print("failure")
-            }
-        }
-    }
- 
     
     func getFootballLeaguesResult () -> [League]{
-        return Footballleagues ?? []
+        return leagues ?? []
     }
-    
+
     func passValueToleagueScreen(value: Int){
         resultToSearch = value
     }

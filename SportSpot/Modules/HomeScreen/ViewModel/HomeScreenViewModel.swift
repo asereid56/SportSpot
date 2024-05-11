@@ -8,9 +8,9 @@
 import Foundation
 
 class HomeScreenViewModel{
-    var leaguesViewModel : LeaguesViewModel?
     
-    func passValueToLeaguesScreen(value : Int ,leaguesViewModel : LeaguesViewModel){
+    func passValueToLeaguesScreen(value : Int ,leaguesViewModel : PassSportsType){
+        print("in home view model: \(value)")
         leaguesViewModel.passValueToleagueScreen(value: value)
     }
 }

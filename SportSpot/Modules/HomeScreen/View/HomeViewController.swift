@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController  , UICollectionViewDelegateFlowLayout {
+class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var sportsCollectionView: UICollectionView!
     var sportsList : [Sport] = []
@@ -15,6 +15,8 @@ class HomeViewController: UIViewController  , UICollectionViewDelegateFlowLayout
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        homeScreenViewModel = HomeScreenViewModel()
         
         sportsList = [
         Sport(name: "Football", imgName: "football"),
@@ -27,9 +29,8 @@ class HomeViewController: UIViewController  , UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let width = (collectionView.frame.width - 20) / 2
-            let height = width + 25
-            return CGSize(width: width, height: height)
+        let width = (collectionView.bounds.size.width - 16) / 2
+            return CGSize(width: width, height: width + 24)
     }
 }
 
@@ -39,41 +40,38 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = sportsCollectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as? HomeCollectionViewCell
         let sport  = sportsList[indexPath.row]
         
-        let sportName : UILabel = cell.contentView.viewWithTag(1) as! UILabel
-        sportName.text = sport.name
+        cell?.sportName.text = sport.name
         
-        let sportImage : UIImageView = cell.contentView.viewWithTag(2) as! UIImageView
-        sportImage.image = UIImage(named: sport.imgName)
-        
-        cell.layer.cornerRadius = 15
-        cell.layer.masksToBounds = true
-        return cell
+        cell?.sportImage.image = UIImage(named: sport.imgName)
+            
+//        let width = (collectionView.bounds.size.width - 16) / 2
+//        cell?.sportImage.frame.size = CGSize(width: width - 8, height: width - 24)
+        cell?.layer.cornerRadius = 15
+        cell?.layer.masksToBounds = true
+        return cell ?? collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let leaguesScreen = storyboard?.instantiateViewController(identifier: "leaguesScreen") as! LeaguesTableViewController
         
         let leaguesViewModel = leaguesScreen.getLeagueViewModel()
         
         homeScreenViewModel?.passValueToLeaguesScreen(value: indexPath.row, leaguesViewModel: leaguesViewModel)
         
+        print("indexpath: in home view \(indexPath.row)")
         self.navigationController?.pushViewController(leaguesScreen, animated: true)
-        
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 1, left: 7, bottom: 1, right: 7)
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+//    }
     
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return 5
+//    }
     
 }
 
