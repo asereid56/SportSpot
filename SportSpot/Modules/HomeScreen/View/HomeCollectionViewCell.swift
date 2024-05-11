@@ -8,5 +8,8 @@
 import UIKit
 
 class HomeCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var sportImage: UIImageView!
+    
+    @IBOutlet weak var sportName: UILabel!
     
 }
