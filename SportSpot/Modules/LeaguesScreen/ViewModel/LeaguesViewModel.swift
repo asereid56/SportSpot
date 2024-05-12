@@ -12,27 +12,37 @@ protocol PassSportsType {
 }
 
 class LeaguesViewModel: PassSportsType {
-    var network : NetworkService
+    
+    private var network : Servicing
     var bindLeaguesToViewController : (()->()) = {}
     
-    var leagues : [League]?
+    private var leagues : [League]?
     var resultToSearch : Int?
     
-    init(network:NetworkService){
+    init(network: Servicing){
         self.network = network
     }
     
     func loadLeagues(from sportType: SportType){
-        network.fetchLeagues(from: sportType) { [weak self] result in
-            switch result{
-            case .success(let leaguesResponse):
+        network.fetchData(sportType: sportType, methodName: .Leagues, id: nil, fromDate: nil, toDate: nil, firstTeamId: nil, secondTeamId: nil) { [weak self] response in
+            switch response{
+            case .success(let data):
                 DispatchQueue.main.async{
-                    self?.leagues = leaguesResponse.result
-                    self?.bindLeaguesToViewController()
+                    print(data)
+                    if let leaguesResponse: LeagueResponse = Utils.convertTo(from: data){
+                        self?.leagues = leaguesResponse.result
+                        self?.bindLeaguesToViewController()
+                    }
                 }
-            case .failure(_):
-                print("failure")
+            case .failure(let error):
+                print(error)
             }
+        }
+    }
+    
+    func loadLeaguesFixtures(from sportType: SportType, for id:Int, fromDate: String, toDate: String){
+        network.fetchData(sportType: sportType, methodName: .Fixtures, id: id, fromDate: fromDate, toDate: toDate, firstTeamId: nil, secondTeamId: nil) { data in
+            print(data)
         }
     }
     

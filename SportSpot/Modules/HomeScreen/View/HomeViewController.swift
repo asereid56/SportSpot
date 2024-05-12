@@ -61,7 +61,6 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
         
         homeScreenViewModel?.passValueToLeaguesScreen(value: indexPath.row, leaguesViewModel: leaguesViewModel)
         
-        print("indexpath: in home view \(indexPath.row)")
         self.navigationController?.pushViewController(leaguesScreen, animated: true)
     }
     

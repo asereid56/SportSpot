@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04E613B52BF040FC00320E5F /* LeagueDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E613B42BF040FC00320E5F /* LeagueDetailsModel.swift */; };
 		4A06ED3F2BDD8084000DE860 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06ED3E2BDD8084000DE860 /* AppDelegate.swift */; };
 		4A06ED412BDD8084000DE860 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06ED402BDD8084000DE860 /* SceneDelegate.swift */; };
 		4A06ED432BDD8084000DE860 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06ED422BDD8084000DE860 /* HomeViewController.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04E613B42BF040FC00320E5F /* LeagueDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueDetailsModel.swift; sourceTree = "<group>"; };
 		4A06ED3B2BDD8084000DE860 /* SportSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A06ED3E2BDD8084000DE860 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A06ED402BDD8084000DE860 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				4A7C6ECE2BEEBD3700575660 /* Leagues.swift */,
+				04E613B42BF040FC00320E5F /* LeagueDetailsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				4A3229B72BF15FE600155235 /* TeamsViewCell.swift in Sources */,
 				4A7C6ECD2BEEBCCB00575660 /* Utils.swift in Sources */,
 				4A67BE752BEEAE1A0009765F /* CustomTableViewCell.swift in Sources */,
+				04E613B52BF040FC00320E5F /* LeagueDetailsModel.swift in Sources */,
 				4A67BE6D2BEEAC4C0009765F /* FavoriteLeaguesTableViewController.swift in Sources */,
 				4A7C6ECF2BEEBD3700575660 /* Leagues.swift in Sources */,
 				4A3229B52BF15FBF00155235 /* UpcomingViewCell.swift in Sources */,
