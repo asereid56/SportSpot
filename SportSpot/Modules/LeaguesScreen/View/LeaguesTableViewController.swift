@@ -9,8 +9,9 @@ import UIKit
 import Kingfisher
 class LeaguesTableViewController: UITableViewController {
     var leaguesViewModel : LeaguesViewModel?
-    var leagues : [League]?
-    var sportType: SportType?
+    var sportType: SportType!
+    
+    var indicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +30,18 @@ class LeaguesTableViewController: UITableViewController {
 
         }
         
-        leaguesViewModel?.loadLeagues(from: sportType ?? .football)
+        indicator = UIActivityIndicatorView(style: .large)
+        indicator.color = .white
+        indicator.hidesWhenStopped = true
+        indicator.center = view.center
+        view.addSubview(indicator)
+        indicator.startAnimating()
         
+        leaguesViewModel?.loadLeagues(from: sportType)
+
         leaguesViewModel?.bindLeaguesToViewController =  { [weak self]  in
-            self?.leagues = self?.leaguesViewModel?.getFootballLeaguesResult()
             self?.tableView.reloadData()
+            self?.indicator.stopAnimating()
         }
         
     }
@@ -50,8 +58,8 @@ class LeaguesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return leagues?.count ?? 0
+        let count = self.leaguesViewModel?.getFootballLeaguesResult().count ?? 0
+        return count
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
@@ -60,7 +68,7 @@ class LeaguesTableViewController: UITableViewController {
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! CustomTableViewCell
          
-         let league = leagues?[indexPath.row]
+         let league = self.leaguesViewModel?.getFootballLeaguesResult()[indexPath.row]
          
          let leagueName : UILabel = cell.contentView.viewWithTag(1) as! UILabel
          leagueName.text = league?.leagueName
@@ -75,5 +83,18 @@ class LeaguesTableViewController: UITableViewController {
      
      return cell
      }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let league = leaguesViewModel?.getFootballLeaguesResult()[indexPath.row] {
+            print(league)
+            
+            let currentDate = Date()
+            let toDay = currentDate.description.split(separator: " ")[0]
+            let pastDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentDate)!.description.split(separator: " ")[0]
+
+            
+            leaguesViewModel?.loadLeaguesFixtures(from: sportType, for: league.leagueKey, fromDate: String(pastDate), toDate: String(toDay))
+        }
+    }
 
 }
