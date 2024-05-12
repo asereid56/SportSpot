@@ -72,8 +72,14 @@ class LeaguesTableViewController: UITableViewController {
                      
                      leagueImage.image = UIImage(named: sportType?.rawValue ?? "leaguePlaceholder")
                  }
+         leagueImage.layer.cornerRadius = leagueImage.bounds.width / 2
      
      return cell
      }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var details =  (storyboard?.instantiateViewController(withIdentifier: "leagueDetails") as? LeagueDetailsViewController)!
+        
+        self.present(details, animated: true)
+    }
 }
