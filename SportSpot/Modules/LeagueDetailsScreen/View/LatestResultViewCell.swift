@@ -18,5 +18,4 @@ class LatestResultViewCell: UICollectionViewCell {
     @IBOutlet weak var teamTwoScore: UILabel!
     @IBOutlet weak var teamTwoImage: UIImageView!
     
-    
 }

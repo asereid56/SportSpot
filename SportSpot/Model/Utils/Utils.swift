@@ -12,9 +12,12 @@ struct Utils {
     static func convertTo<T: Decodable>(from data: Data)-> T?{
         do {
             let decoder = JSONDecoder()
-            let leagueResponse = try decoder.decode(T.self, from: data)
-            return leagueResponse
-        } catch {
+            
+            let result = try decoder.decode(T.self, from: data)
+            return result
+            
+        } catch let error{
+            print(error)
             return nil
         }
     }

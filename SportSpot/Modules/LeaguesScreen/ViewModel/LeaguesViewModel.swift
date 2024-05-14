@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PassSportsType {
-    func passValueToleagueScreen(value: Int)
+    func passSportTypeToleagueScreen(value: SportType)
 }
 
 class LeaguesViewModel: PassSportsType {
@@ -17,7 +17,7 @@ class LeaguesViewModel: PassSportsType {
     var bindLeaguesToViewController : (()->()) = {}
     
     private var leagues : [League]?
-    var resultToSearch : Int?
+    private var sportType : SportType?
     
     init(network: Servicing){
         self.network = network
@@ -29,7 +29,7 @@ class LeaguesViewModel: PassSportsType {
             case .success(let data):
                 DispatchQueue.main.async{
                     print(data)
-                    if let leaguesResponse: LeagueResponse = Utils.convertTo(from: data){
+                    if let leaguesResponse: Response<League> = Utils.convertTo(from: data){
                         self?.leagues = leaguesResponse.result
                         self?.bindLeaguesToViewController()
                     }
@@ -40,18 +40,19 @@ class LeaguesViewModel: PassSportsType {
         }
     }
     
-    func loadLeaguesFixtures(from sportType: SportType, for id:Int, fromDate: String, toDate: String){
-        network.fetchData(sportType: sportType, methodName: .Fixtures, id: id, fromDate: fromDate, toDate: toDate, firstTeamId: nil, secondTeamId: nil) { data in
-            print(data)
-        }
-    }
-    
     func getFootballLeaguesResult () -> [League]{
         return leagues ?? []
     }
 
-    func passValueToleagueScreen(value: Int){
-        resultToSearch = value
+    func passSportTypeToleagueScreen(value: SportType){
+        sportType = value
     }
 
+    func getSportType() -> SportType {
+        return sportType ?? .football
+    }
+    
+    func passValueToLeagueDetailsScreen(value : Int ,leagueDetailsViewModel : PassLeagueDetails){
+        leagueDetailsViewModel.passLeagueIdToleagueDetailsScreen(value: value, sportType: getSportType())
+    }
 }

@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import Kingfisher
 
 class LeagueDetailsViewController: UIViewController {
     
     @IBOutlet weak var myCollectionView: UICollectionView!
+    
+    var leagueDetailsViewModel: LeagueDetailsViewModel?
+    var isDataReady = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,6 +31,34 @@ class LeagueDetailsViewController: UIViewController {
         }
         myCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderView")
         myCollectionView.setCollectionViewLayout(layout, animated: true)
+        
+        _ = getLeagueViewModel()
+        
+        leagueDetailsViewModel?.bindLatestEventsToViewController = { [weak self] in
+            DispatchQueue.main.async {
+                print("bindLatestEventsToViewController")
+                self?.myCollectionView.reloadData()
+            }
+        }
+        leagueDetailsViewModel?.bindUpcomingEventsToViewController = { [weak self] in
+            DispatchQueue.main.async {
+                print("bindUpcomingEventsToViewController")
+                self?.myCollectionView.reloadData()
+            }
+        }
+        
+        print("before call view model")
+        leagueDetailsViewModel?.loadUpcomingEvents()
+        leagueDetailsViewModel?.loadLatestEvents()
+    }
+    
+    func getLeagueViewModel() -> PassLeagueDetails{
+        if let leagueDetailsViewModel{
+            return leagueDetailsViewModel
+        }else{
+            leagueDetailsViewModel = LeagueDetailsViewModel(network: NetworkService())
+            return leagueDetailsViewModel!
+        }
     }
     
     func drawTopSection() -> NSCollectionLayoutSection{
@@ -38,7 +71,6 @@ class LeagueDetailsViewController: UIViewController {
         section.interGroupSpacing = 10
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = .init(top: 10, leading: 10, bottom: 0, trailing: 10)
-       
         
         section.visibleItemsInvalidationHandler = { (items, offset, environment) in
             items.forEach { item in
@@ -51,18 +83,19 @@ class LeagueDetailsViewController: UIViewController {
         }
         return section
     }
+    
     func drawMiddleSection() -> NSCollectionLayoutSection{
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-            
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.13)), subitems: [item])
-            
-            let section = NSCollectionLayoutSection(group: group)
-            
-            section.interGroupSpacing = 10
-            section.contentInsets = .init(top: 10, leading: 16, bottom: 0, trailing: 16)
-      
-            return section
-        }
+        
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.13)), subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        section.interGroupSpacing = 10
+        section.contentInsets = .init(top: 10, leading: 16, bottom: 0, trailing: 16)
+        
+        return section
+    }
     
     func drawBottomSection() -> NSCollectionLayoutSection{
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
@@ -77,13 +110,21 @@ class LeagueDetailsViewController: UIViewController {
        
         return section
     }
-  
 }
 
 
 extension LeagueDetailsViewController : UICollectionViewDelegate , UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        switch section {
+        case 0:
+            return leagueDetailsViewModel?.getUpcomingEvents().count ?? 0
+        case 1:
+            return leagueDetailsViewModel?.getLatestEvents().count ?? 0
+        case 2:
+            return leagueDetailsViewModel?.getTeams().count ?? 0
+        default:
+            return 0
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -92,21 +133,59 @@ extension LeagueDetailsViewController : UICollectionViewDelegate , UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.section == 0{
-            let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "topCell", for: indexPath)
-            cell.layer.cornerRadius = 16
-            return cell
-        }else if indexPath.section == 1{
-            let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "MiddleCell", for: indexPath)
-            cell.layer.cornerRadius = 16
-            return cell
-        }else if indexPath.section == 2{
-            let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "bottomCell", for: indexPath) as! TeamsViewCell
-            cell.setup()
+        switch indexPath.section {
+        case 0:
+            let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "topCell", for: indexPath) as! UpcomingViewCell
             
+            let matchDetails = leagueDetailsViewModel?.getUpcomingEvents()[indexPath.row]
+            
+            if let teamOneImage = matchDetails?.homeTeamLogo{
+                cell.teamOneImage.kf.setImage(with: teamOneImage)
+            }
+            if let teamTwoImage = matchDetails?.awayTeamLogo{
+                cell.teamTwoImage.kf.setImage(with: teamTwoImage)
+            }
+            cell.teamOneName.text = matchDetails?.eventHomeTeam
+            cell.teamTwoName.text = matchDetails?.eventAwayTeam
+            cell.timeDetails.text = matchDetails?.eventTime
+            cell.dateDetails.text = matchDetails?.eventDate
+            cell.leagueDetails.text = matchDetails?.stageName
+     
+            cell.layer.cornerRadius = 16
             return cell
+        case 1:
+            let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "MiddleCell", for: indexPath) as! LatestResultViewCell
+            
+            let matchDetails = leagueDetailsViewModel?.getLatestEvents()[indexPath.row]
+            
+            if let teamOneImage = matchDetails?.homeTeamLogo{
+                cell.teamOneImage.kf.setImage(with: teamOneImage)
+            }
+            if let teamTwoImage = matchDetails?.awayTeamLogo{
+                cell.teamTwoImage.kf.setImage(with: teamTwoImage)
+            }
+            
+            cell.dateDetails.text = matchDetails?.eventDate
+            cell.timeDetails.text = matchDetails?.eventTime
+            cell.teamOneName.text = matchDetails?.eventHomeTeam
+            cell.teamTwoName.text = matchDetails?.eventAwayTeam
+            cell.teamOneScore.text = matchDetails?.eventFinalResult
+            cell.teamTwoScore.text = ""
+            
+            cell.layer.cornerRadius = 16
+            return cell
+        case 2:
+            let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "bottomCell", for: indexPath) as! TeamsViewCell
+            
+            let teamDetails = leagueDetailsViewModel?.getTeams()[indexPath.row]
+
+            cell.teamImage.kf.setImage(with: teamDetails?.logo)
+
+            cell.setup()
+            return cell
+        default:
+            return UICollectionViewCell()
         }
-        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
