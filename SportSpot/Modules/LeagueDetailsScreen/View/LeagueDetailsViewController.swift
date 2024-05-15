@@ -11,6 +11,7 @@ import Kingfisher
 class LeagueDetailsViewController: UIViewController {
     
     @IBOutlet weak var myCollectionView: UICollectionView!
+    @IBOutlet weak var leagueDetailsName: UILabel!
     
     var leagueDetailsViewModel: LeagueDetailsViewModel?
     var isDataReady = false
@@ -29,7 +30,8 @@ class LeagueDetailsViewController: UIViewController {
             }
             return nil
         }
-        myCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderView")
+        myCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.reuseIdentifier)
+        
         myCollectionView.setCollectionViewLayout(layout, animated: true)
         
         _ = getLeagueViewModel()
@@ -37,6 +39,12 @@ class LeagueDetailsViewController: UIViewController {
         leagueDetailsViewModel?.bindLatestEventsToViewController = { [weak self] in
             DispatchQueue.main.async {
                 print("bindLatestEventsToViewController")
+                if let nameLeague = self?.leagueDetailsViewModel?.getLatestEvents().first?.leagueName {
+                    self?.leagueDetailsName.text = nameLeague
+                }else{
+                    self?.leagueDetailsName.text = self?.leagueDetailsViewModel?.getUpcomingEvents().first?.leagueName
+                }
+                
                 self?.myCollectionView.reloadData()
             }
         }
@@ -50,6 +58,14 @@ class LeagueDetailsViewController: UIViewController {
         print("before call view model")
         leagueDetailsViewModel?.loadUpcomingEvents()
         leagueDetailsViewModel?.loadLatestEvents()
+    }
+    
+    @IBAction func favBtn(_ sender: Any) {
+        
+    }
+    
+    @IBAction func backBtn(_ sender: Any) {
+        self.dismiss(animated: true)
     }
     
     func getLeagueViewModel() -> PassLeagueDetails{
@@ -107,7 +123,7 @@ class LeagueDetailsViewController: UIViewController {
         section.interGroupSpacing = 10
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = .init(top: 10, leading: 10, bottom: 0, trailing: 10)
-       
+        
         return section
     }
 }
@@ -130,7 +146,7 @@ extension LeagueDetailsViewController : UICollectionViewDelegate , UICollectionV
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         switch indexPath.section {
@@ -150,7 +166,7 @@ extension LeagueDetailsViewController : UICollectionViewDelegate , UICollectionV
             cell.timeDetails.text = matchDetails?.eventTime
             cell.dateDetails.text = matchDetails?.eventDate
             cell.leagueDetails.text = matchDetails?.stageName
-     
+            
             cell.layer.cornerRadius = 16
             return cell
         case 1:
@@ -170,7 +186,6 @@ extension LeagueDetailsViewController : UICollectionViewDelegate , UICollectionV
             cell.teamOneName.text = matchDetails?.eventHomeTeam
             cell.teamTwoName.text = matchDetails?.eventAwayTeam
             cell.teamOneScore.text = matchDetails?.eventFinalResult
-            cell.teamTwoScore.text = ""
             
             cell.layer.cornerRadius = 16
             return cell
@@ -178,9 +193,9 @@ extension LeagueDetailsViewController : UICollectionViewDelegate , UICollectionV
             let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: "bottomCell", for: indexPath) as! TeamsViewCell
             
             let teamDetails = leagueDetailsViewModel?.getTeams()[indexPath.row]
-
+            
             cell.teamImage.kf.setImage(with: teamDetails?.logo)
-
+            
             cell.setup()
             return cell
         default:
@@ -189,26 +204,25 @@ extension LeagueDetailsViewController : UICollectionViewDelegate , UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-           // Ensure the requested kind is for a header
-           guard kind == UICollectionView.elementKindSectionHeader else {
-               fatalError("Invalid element kind")
-           }
-           
-           // Dequeue a reusable view using the identifier
-           let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderView", for: indexPath)
-           
-           // Configure your header view
-           if let headerLabel = headerView.viewWithTag(100) as? UILabel {
-               headerLabel.text = "Upcoming Events"
-           }
-           
-           return headerView
-       }
+    
+        let headerView = myCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderCollectionReusableView.reuseIdentifier, for: indexPath) as! HeaderCollectionReusableView
+        
+        switch indexPath.section {
+        case 0:
+            headerView.titleLabel.text = "Upcoming Events"
+        case 1:
+            headerView.titleLabel.text = "Latest Events"
+        default:
+            headerView.titleLabel.text = "Teams"
+        }
+        
+        return headerView
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-           // Return the size of the header
-           return CGSize(width: collectionView.bounds.width, height: 50)
-       }
+        // Return the size of the header
+        return CGSize(width: collectionView.bounds.width, height: 50)
+    }
     
     
 }
