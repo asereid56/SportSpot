@@ -31,7 +31,7 @@ class LeagueDetailsViewModel: PassLeagueDetails{
 
     private func loadLeaguesFixtures(from sportType: SportType, for id:Int, fromDate: String, toDate: String, complation:@escaping (Data)->Void ){
         print("call the data")
-        network.fetchData(sportType: sportType, methodName: .Fixtures, id: id, fromDate: fromDate, toDate: toDate, firstTeamId: nil, secondTeamId: nil) {[weak self] response in
+        network.fetchData(sportType: sportType, methodName: .Fixtures, id: id, fromDate: fromDate, toDate: toDate, firstTeamId: nil, secondTeamId: nil) { response in
             switch response{
             case .success(let data):
                 complation(data)
@@ -74,6 +74,11 @@ class LeagueDetailsViewModel: PassLeagueDetails{
                 self?.bindUpcomingEventsToViewController()
             }
         }
+    }
+    
+    func passTeamToTeamsDetailsScreen(value: Int , to teamDetailsScreen: PassTeamDetails){
+        let selectedTeam = getTeams()[value]
+        teamDetailsScreen.passTeamToTeamsDetailsScreen(value: selectedTeam)
     }
     
     func passLeagueIdToleagueDetailsScreen(value: Int, sportType: SportType) {
