@@ -16,7 +16,7 @@
 		4A06ED462BDD8084000DE860 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A06ED442BDD8084000DE860 /* Main.storyboard */; };
 		4A06ED482BDD808E000DE860 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A06ED472BDD808E000DE860 /* Assets.xcassets */; };
 		4A06ED4B2BDD808E000DE860 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A06ED492BDD808E000DE860 /* LaunchScreen.storyboard */; };
-		4A06ED562BDD8090000DE860 /* SportSpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06ED552BDD8090000DE860 /* SportSpotTests.swift */; };
+		4A06ED562BDD8090000DE860 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06ED552BDD8090000DE860 /* NetworkServiceTests.swift */; };
 		4A06ED602BDD8091000DE860 /* SportSpotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06ED5F2BDD8091000DE860 /* SportSpotUITests.swift */; };
 		4A06ED622BDD8091000DE860 /* SportSpotUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A06ED612BDD8091000DE860 /* SportSpotUITestsLaunchTests.swift */; };
 		4A18CF422BF5D4DB007DFC0A /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A18CF412BF5D4DB007DFC0A /* FavoriteViewModel.swift */; };
@@ -79,7 +79,7 @@
 		4A06ED4A2BDD808E000DE860 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A06ED4C2BDD808F000DE860 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A06ED512BDD8090000DE860 /* SportSpotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SportSpotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A06ED552BDD8090000DE860 /* SportSpotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSpotTests.swift; sourceTree = "<group>"; };
+		4A06ED552BDD8090000DE860 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		4A06ED5B2BDD8090000DE860 /* SportSpotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SportSpotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A06ED5F2BDD8091000DE860 /* SportSpotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSpotUITests.swift; sourceTree = "<group>"; };
 		4A06ED612BDD8091000DE860 /* SportSpotUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSpotUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 		4A06ED542BDD8090000DE860 /* SportSpotTests */ = {
 			isa = PBXGroup;
 			children = (
-				4A06ED552BDD8090000DE860 /* SportSpotTests.swift */,
+				4A06ED552BDD8090000DE860 /* NetworkServiceTests.swift */,
 			);
 			path = SportSpotTests;
 			sourceTree = "<group>";
@@ -595,7 +595,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A06ED562BDD8090000DE860 /* SportSpotTests.swift in Sources */,
+				4A06ED562BDD8090000DE860 /* NetworkServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
