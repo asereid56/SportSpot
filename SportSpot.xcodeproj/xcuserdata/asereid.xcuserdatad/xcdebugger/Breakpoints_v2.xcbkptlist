@@ -7,47 +7,220 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "33775054-01BA-4C73-9719-3FC01A96908F"
+            uuid = "8F516DFB-1DC2-4EAC-9E71-D2C59EEC0B94"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportSpot/Modules/LeagueDetailsScreen/ViewModel/LeagueDetailsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "passTeamToTeamsDetailsScreen(value:to:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B6F4BADE-FE67-44FF-B7DB-9AC2030C2609"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SportSpot/Modules/TeamDetails/View/TeamDetailsViewController.swift"
+            filePath = "SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "loadTeamData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E5BC6052-5630-4C76-BF93-2A103550F792"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "loadTeamData()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "33775054-01BA-4C73-9719-3FC01A96908F - f7ff789b6709d576"
+                  uuid = "E5BC6052-5630-4C76-BF93-2A103550F792 - a979ce10650c726a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "SportSpot.TeamDetailsViewController.viewDidLoad() -&gt; ()"
+                  symbolName = "SportSpot.TeamDetailsViewModel.loadTeamData() -&gt; ()"
                   moduleName = "SportSpot"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/View/TeamDetailsViewController.swift"
+                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "3383">
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "275">
                </Location>
                <Location
-                  uuid = "33775054-01BA-4C73-9719-3FC01A96908F - f7ff789b6709d576"
+                  uuid = "E5BC6052-5630-4C76-BF93-2A103550F792 - a206ff6cb80086"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "SportSpot.TeamDetailsViewController.viewDidLoad() -&gt; ()"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in SportSpot.TeamDetailsViewModel.loadTeamData() -&gt; ()"
                   moduleName = "SportSpot"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/View/TeamDetailsViewController.swift"
+                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "3189">
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "179">
+               </Location>
+               <Location
+                  uuid = "E5BC6052-5630-4C76-BF93-2A103550F792 - a206ff6cb80086"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in SportSpot.TeamDetailsViewModel.loadTeamData() -&gt; ()"
+                  moduleName = "SportSpot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "175">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "220DF53E-34A3-4EC1-B67E-08C49FA0DBE0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "loadTeamData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "220DF53E-34A3-4EC1-B67E-08C49FA0DBE0 - a206ff6cb80702"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in SportSpot.TeamDetailsViewModel.loadTeamData() -&gt; ()"
+                  moduleName = "SportSpot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "811">
+               </Location>
+               <Location
+                  uuid = "220DF53E-34A3-4EC1-B67E-08C49FA0DBE0 - a206ff6cb80702"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in SportSpot.TeamDetailsViewModel.loadTeamData() -&gt; ()"
+                  moduleName = "SportSpot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "1500">
+               </Location>
+               <Location
+                  uuid = "220DF53E-34A3-4EC1-B67E-08C49FA0DBE0 - a206ff6cb80702"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in SportSpot.TeamDetailsViewModel.loadTeamData() -&gt; ()"
+                  moduleName = "SportSpot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "822">
+               </Location>
+               <Location
+                  uuid = "220DF53E-34A3-4EC1-B67E-08C49FA0DBE0 - a206ff6cb80702"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in SportSpot.TeamDetailsViewModel.loadTeamData() -&gt; ()"
+                  moduleName = "SportSpot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "1511">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "460FE488-E7CE-4544-8A48-516B857CA912"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "loadTeamData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "460FE488-E7CE-4544-8A48-516B857CA912 - a206ff6cb80740"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in SportSpot.TeamDetailsViewModel.loadTeamData() -&gt; ()"
+                  moduleName = "SportSpot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "1991">
+               </Location>
+               <Location
+                  uuid = "460FE488-E7CE-4544-8A48-516B857CA912 - a206ff6cb80740"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in SportSpot.TeamDetailsViewModel.loadTeamData() -&gt; ()"
+                  moduleName = "SportSpot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/asereid/Desktop/ITI/iOS%20Using%20Swift/SportSpot/SportSpot/Modules/TeamDetails/ViewModel/TeamDetailsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "2002">
                </Location>
             </Locations>
          </BreakpointContent>

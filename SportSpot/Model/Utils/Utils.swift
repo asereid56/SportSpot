@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Utils {
     
@@ -20,6 +21,21 @@ struct Utils {
             print(error)
             return nil
         }
+    }
+    
+    static func showAlert(title: String, message:String , view : UIViewController , isCancelled :Bool, complitionHandler : @escaping ()->() ) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+         let ok = UIAlertAction(title: "ok", style: .default) { action in
+            complitionHandler()
+         }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(ok)
+        if isCancelled {
+            alert.addAction(cancel)
+        }
+         
+        view.present(alert, animated: true)
     }
     
 }
@@ -47,4 +63,6 @@ enum MethodName: String {
     case OddsLive
     case Comments = "Comments&matchId="
 }
+
+
 

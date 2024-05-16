@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol PassLeagueDetails {
-    func passLeagueIdToleagueDetailsScreen(value: Int, sportType: SportType)
+    func passLeagueIdToleagueDetailsScreen(value: League)
 }
 
 class LeagueDetailsViewModel: PassLeagueDetails{
@@ -17,15 +17,13 @@ class LeagueDetailsViewModel: PassLeagueDetails{
     private var network : Servicing
     private var db : LocalDB
     
-    var bindUpcomingEventsToViewController : (()->()) = {}
-    var bindLatestEventsToViewController : (()->()) = {}
+    var bindDataToViewController : (()->()) = {}
 
     private var upcomingEvents : [MatchDetails]?
     private var latestEvents : [MatchDetails]?
     private var teamsDetails : [TeamDetails] = []
     
     private var sportType: SportType?
-    private var leagueId: Int?
     
     private var league: League?
 
@@ -49,16 +47,16 @@ class LeagueDetailsViewModel: PassLeagueDetails{
     func loadLatestEvents(){
         
         let toDay = Date().description.split(separator: " ")[0]
-        let pastDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!.description.split(separator: " ")[0]
+        let pastDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())!.description.split(separator: " ")[0]
         
-        loadLeaguesFixtures(from: sportType ?? .football, for: leagueId ?? 0 , fromDate: String(pastDate), toDate: String(toDay)){ [weak self] data in
+        loadLeaguesFixtures(from: sportType ?? .football, for: league?.leagueKey ?? 0 , fromDate: String(pastDate), toDate: String(toDay)){ [weak self] data in
             print("loadLatestEvents")
             
             if let response: Response<MatchDetails> = Utils.convertTo(from: data){
                 print("LatestEvents\(data)")
                 self?.latestEvents = response.result
                 self?.loadTeamsDetails()
-                self?.bindLatestEventsToViewController()
+                self?.bindDataToViewController()
             }else{
                 print("Can't convert the data: \(data)")
             }
@@ -68,27 +66,28 @@ class LeagueDetailsViewModel: PassLeagueDetails{
     func loadUpcomingEvents(){
         
         let toDay = Date().description.split(separator: " ")[0]
-        let nextDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: Date())!.description.split(separator: " ")[0]
+        let nextDate = Calendar.current.date(byAdding: .year, value: 1, to: Date())!.description.split(separator: " ")[0]
         
-        loadLeaguesFixtures(from: sportType ?? .football, for: leagueId ?? 0, fromDate: String(toDay), toDate: String(nextDate)){ [weak self] data in
+        loadLeaguesFixtures(from: sportType ?? .football, for: league?.leagueKey ?? 0, fromDate: String(toDay), toDate: String(nextDate)){ [weak self] data in
             print("loadUpcomingEvents\(data)")
             if let response: Response<MatchDetails> = Utils.convertTo(from: data){
                
                 self?.upcomingEvents = response.result
                 self?.loadTeamsDetails()
-                self?.bindUpcomingEventsToViewController()
+                self?.bindDataToViewController()
             }
         }
     }
     
     func passTeamToTeamsDetailsScreen(value: Int , to teamDetailsScreen: PassTeamDetails){
         let selectedTeam = getTeams()[value]
-        teamDetailsScreen.passTeamToTeamsDetailsScreen(value: selectedTeam)
+        print("selecrted teammmmmm \(selectedTeam)")
+        teamDetailsScreen.passTeamToTeamsDetailsScreen(value: selectedTeam.key ?? 1, for: sportType ?? .football)
     }
     
-    func passLeagueIdToleagueDetailsScreen(value: Int, sportType: SportType) {
-        leagueId = value
-        self.sportType = sportType
+    func passLeagueIdToleagueDetailsScreen(value: League) {
+        league = value
+        self.sportType = SportType(rawValue: (league?.sportType)!)
     }
     
     func deleteFav(complation: (Bool)->()) {
@@ -110,8 +109,8 @@ class LeagueDetailsViewModel: PassLeagueDetails{
         return sportType ?? .football
     }
     
-    func getLeagueId() -> Int {
-        return leagueId ?? 0
+    func getLeague() -> League? {
+        return league
     }
     
     func getLatestEvents() -> [MatchDetails]{
@@ -127,15 +126,13 @@ class LeagueDetailsViewModel: PassLeagueDetails{
         let array = (latestEvents ?? [] ) + (upcomingEvents ?? [])
             for item in array{
                 if teamsDetails.first(where: { $0.key == item.homeTeamKey }) == nil {
-                    teamsDetails.append(TeamDetails(key: item.homeTeamKey, name: item.eventHomeTeam, logo: item.homeTeamLogo, lineup: item.lineups?.homeTeam))
+                    teamsDetails.append(TeamDetails(key: item.homeTeamKey, name: item.eventHomeTeam, logo: item.homeTeamLogo ?? item.eventHomeTeamLogo, lineup: item.lineups?.homeTeam))
                 }
                 if teamsDetails.first(where: { $0.key == item.awayTeamKey }) == nil {
-                    teamsDetails.append(TeamDetails(key: item.awayTeamKey, name: item.eventAwayTeam, logo: item.awayTeamLogo, lineup: item.lineups?.awayTeam))
+                    teamsDetails.append(TeamDetails(key: item.awayTeamKey, name: item.eventAwayTeam, logo: item.awayTeamLogo ?? item.eventAwayTeamLogo, lineup: item.lineups?.awayTeam))
                 }
         }
         print(teamsDetails)
-        
-        league = League(leagueKey: leagueId!, leagueName: array.first?.leagueName ?? "", countryKey: array.first?.eventCountryKey, countryName: array.first?.countryName, leagueLogo: array.first?.leagueLogo, countryLogo: array.first?.countryLogo, leagueYear: nil, sportType: sportType?.rawValue)
     }
 
     func getTeams() -> [TeamDetails]{

@@ -25,7 +25,7 @@ struct League: Codable {
     let leagueLogo: URL?
     let countryLogo: URL?
     let leagueYear: String?
-    let sportType: String?
+    var sportType: String?
 
     enum CodingKeys: String, CodingKey {
         case leagueKey = "league_key"
@@ -36,6 +36,57 @@ struct League: Codable {
         case countryLogo = "country_logo"
         case leagueYear = "league_year"
         case sportType
+    }
+}
+
+// MARK: - Teams
+
+struct Team: Codable {
+    let teamKey: Int
+    let teamName: String
+    let teamLogo: String?
+    let players: [Player]?
+    let coaches: [Coach]?
+    
+    enum CodingKeys: String, CodingKey {
+        case teamKey = "team_key"
+        case teamName = "team_name"
+        case teamLogo = "team_logo"
+        case players
+        case coaches
+    }
+    
+}
+        
+struct Player: Codable {
+    let playerKey: Int
+    let playerName: String
+    let playerImage: String?
+    let playerAge: String?
+    let playerGoals: String?
+    let playerMatchPlayed: String?
+    let playerNumber: String?
+    let playerInjured: String?
+    let playerType: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case playerKey = "player_key"
+        case playerName = "player_name"
+        case playerImage = "player_image"
+        case playerAge = "player_age"
+        case playerGoals = "player_goals"
+        case playerMatchPlayed = "player_match_played"
+        case playerNumber = "player_number"
+        case playerInjured = "player_injured"
+        case playerType = "player_type"
+    }
+}
+        
+struct Coach: Codable {
+    let coachName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case coachName = "coach_name"
     }
 }
 
@@ -62,6 +113,8 @@ struct MatchDetails: Codable {
     let eventReferee: String?
     let homeTeamLogo: URL?
     let awayTeamLogo: URL?
+    let eventHomeTeamLogo : URL?
+    let eventAwayTeamLogo : URL?
     let eventCountryKey: Int?
     let leagueLogo: URL?
     let countryLogo: URL?
@@ -100,6 +153,8 @@ struct MatchDetails: Codable {
         case eventReferee = "event_referee"
         case homeTeamLogo = "home_team_logo"
         case awayTeamLogo = "away_team_logo"
+        case eventHomeTeamLogo = "event_home_team_logo"
+        case eventAwayTeamLogo = "event_away_team_logo"
         case eventCountryKey = "event_country_key"
         case leagueLogo = "league_logo"
         case countryLogo = "country_logo"
@@ -178,7 +233,7 @@ struct Lineups: Codable {
 // MARK: - LineupTeam
 struct LineupTeam: Codable {
     let startingLineups, substitutes: [StartingLineup]?
-    let coaches: [Coach]?
+    let coaches: [Coaches]?
     let missingPlayers: [JSONAny]?
 
     enum CodingKeys: String, CodingKey {
@@ -189,7 +244,7 @@ struct LineupTeam: Codable {
 }
 
 // MARK: - Coach
-struct Coach: Codable {
+struct Coaches: Codable {
     let coache: String?
     let coacheCountry: JSONNull?
 

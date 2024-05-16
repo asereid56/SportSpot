@@ -52,7 +52,9 @@ class LeaguesViewModel: PassSportsType {
         return sportType ?? .football
     }
     
-    func passValueToLeagueDetailsScreen(value : Int ,leagueDetailsViewModel : PassLeagueDetails){
-        leagueDetailsViewModel.passLeagueIdToleagueDetailsScreen(value: value, sportType: getSportType())
+    func passValueToLeagueDetailsScreen(at : Int ,leagueDetailsViewModel : PassLeagueDetails){
+        var league = leagues![at]
+        league.sportType = sportType?.rawValue ?? ""
+        leagueDetailsViewModel.passLeagueIdToleagueDetailsScreen(value: league)
     }
 }

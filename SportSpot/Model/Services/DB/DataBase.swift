@@ -119,7 +119,7 @@ class DataBase: LocalDB{
     
     func convertToLeague(from:NSManagedObject) -> League{
         
-        return League(leagueKey: from.value(forKey: Attribute.leagueId.rawValue) as! Int, leagueName: from.value(forKey: Attribute.leagueName.rawValue) as! String, countryKey: nil, countryName: nil, leagueLogo: URL(string: from.value(forKey: Attribute.leagueLogo.rawValue) as! String), countryLogo: nil, leagueYear: nil, sportType: from.value(forKey: Attribute.sportType.rawValue) as? String)
+        return League(leagueKey: from.value(forKey: Attribute.leagueId.rawValue) as! Int, leagueName: from.value(forKey: Attribute.leagueName.rawValue) as! String, countryKey: nil, countryName: nil, leagueLogo: URL(string: from.value(forKey: Attribute.leagueLogo.rawValue) as? String ?? ""), countryLogo: nil, leagueYear: nil, sportType: from.value(forKey: Attribute.sportType.rawValue) as? String)
     }
 
     func convertToManagedObject(from: League, insertInto context: NSManagedObjectContext) -> NSManagedObject{
@@ -127,10 +127,9 @@ class DataBase: LocalDB{
         let entity = NSEntityDescription.entity(forEntityName: Attribute.Entity.rawValue, in: context)
         
         let league = NSManagedObject(entity: entity!, insertInto: context)
-        
         league.setValue(from.leagueKey, forKey: Attribute.leagueId.rawValue)
         league.setValue(from.leagueName, forKey: Attribute.leagueName.rawValue)
-        league.setValue(from.leagueLogo, forKey: Attribute.leagueLogo.rawValue)
+        league.setValue(from.leagueLogo?.absoluteString, forKey: Attribute.leagueLogo.rawValue)
         league.setValue(from.sportType, forKey: Attribute.sportType.rawValue)
         
         context.detectConflicts(for: league)

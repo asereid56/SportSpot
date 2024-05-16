@@ -7,16 +7,25 @@
 
 import UIKit
 import Kingfisher
+import Reachability
 class LeaguesViewController: UIViewController {
     
+    @IBOutlet weak var noDataImage: UIImageView!
     
     @IBOutlet weak var myTableView: UITableView!
     
     var indicator: UIActivityIndicatorView!
     var leaguesViewModel : LeaguesViewModel?
     
+    var reachability : Reachability!
+    func isInternetAvailable() -> Bool {
+        return reachability.connection != .unavailable
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        reachability = try! Reachability()
        
         navigationController?.navigationBar.tintColor = UIColor.systemYellow
         let nib = UINib(nibName: "CustomLeaguesTableViewCell", bundle: nil)
@@ -59,6 +68,7 @@ extension LeaguesViewController : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = self.leaguesViewModel?.getFootballLeaguesResult().count ?? 0
+        noDataImage.isHidden = (count > 0)
         return count
     }
     
@@ -68,13 +78,12 @@ extension LeaguesViewController : UITableViewDelegate , UITableViewDataSource {
         let league = self.leaguesViewModel?.getFootballLeaguesResult()[indexPath.row]
         
         cell.LeagueName.text = league?.leagueName
-    
+        let sportType = leaguesViewModel?.getSportType()
+        
         if let logoURL = league?.leagueLogo {
-            cell.leagueImage.kf.setImage(with: logoURL)
+            cell.leagueImage.kf.setImage(with: logoURL ,placeholder:   UIImage(named: sportType?.rawValue ?? "cup"))
         } else {
-            let sportType = leaguesViewModel?.getSportType()
-            
-            cell.leagueImage.image = UIImage(named: sportType?.rawValue ?? "leaguePlaceholder")
+            cell.leagueImage.image = UIImage(named: sportType?.rawValue ?? "cup")
         }
         cell.leagueImage.layer.cornerRadius = cell.leagueImage.bounds.width / 2
         
@@ -83,14 +92,16 @@ extension LeaguesViewController : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let details =  (storyboard?.instantiateViewController(withIdentifier: "leagueDetails") as? LeagueDetailsViewController)!
-        let leagueDetailsViewModel = details.getLeagueViewModel()
+        if isInternetAvailable(){
+            let details =  (storyboard?.instantiateViewController(withIdentifier: "leagueDetails") as? LeagueDetailsViewController)!
+            let leagueDetailsViewModel = details.getLeagueViewModel()
 
-        let league = leaguesViewModel?.getFootballLeaguesResult()[indexPath.row]
-        
-        leaguesViewModel?.passValueToLeagueDetailsScreen(value: league?.leagueKey ?? 0, leagueDetailsViewModel: leagueDetailsViewModel)
-        
-        self.present(details, animated: true)
+            leaguesViewModel?.passValueToLeagueDetailsScreen(at: indexPath.row, leagueDetailsViewModel: leagueDetailsViewModel)
+            
+            self.present(details, animated: true)
+        }else{
+            Utils.showAlert(title: "Connection Failed", message: "Please check your internet connection", view: self, isCancelled: false) {}
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

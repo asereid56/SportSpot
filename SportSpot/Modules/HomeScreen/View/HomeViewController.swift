@@ -6,15 +6,22 @@
 //
 
 import UIKit
+import Reachability
 
 class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var sportsCollectionView: UICollectionView!
     var sportsList : [Sport] = []
     var homeScreenViewModel : HomeScreenViewModel?
+    var reachability : Reachability!
+    func isInternetAvailable() -> Bool {
+        return reachability.connection != .unavailable
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        reachability = try! Reachability()
         
         let nib = UINib(nibName: "HomeViewCell", bundle: nil)
         sportsCollectionView.register(nib, forCellWithReuseIdentifier: "collectionCell")
@@ -22,10 +29,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout {
         homeScreenViewModel = HomeScreenViewModel()
         
         sportsList = [
-        Sport(name: "Football", imgName: "football"),
-        Sport(name: "Basketball", imgName: "basketball"),
-        Sport(name: "Tennis", imgName: "tennis"),
-        Sport(name: "Cricket", imgName: "cricket"),
+        Sport(name: "Football", imgName: "homeFootball"),
+        Sport(name: "Basketball", imgName: "homeBasketball"),
+        Sport(name: "Tennis", imgName: "homeTennis"),
+        Sport(name: "Cricket", imgName: "homeCricket"),
         ]
      
         
@@ -58,13 +65,17 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let leaguesScreen = storyboard?.instantiateViewController(identifier: "leaguesScreen") as! LeaguesViewController
-        
-        let leaguesViewModel = leaguesScreen.getLeagueViewModel()
-        
-        homeScreenViewModel?.passValueToLeaguesScreen(value: indexPath.row, leaguesViewModel: leaguesViewModel)
-        
-        self.navigationController?.pushViewController(leaguesScreen, animated: true)
+        if isInternetAvailable(){
+            let leaguesScreen = storyboard?.instantiateViewController(identifier: "leaguesScreen") as! LeaguesViewController
+            
+            let leaguesViewModel = leaguesScreen.getLeagueViewModel()
+            
+            homeScreenViewModel?.passValueToLeaguesScreen(value: indexPath.row, leaguesViewModel: leaguesViewModel)
+            
+            self.navigationController?.pushViewController(leaguesScreen, animated: true)
+        }else{
+            Utils.showAlert(title: "Connection Failed", message: "Please check your internet connection", view: self, isCancelled: false) {}
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

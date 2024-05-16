@@ -7,103 +7,45 @@
 
 import UIKit
 
+
 class TeamDetailsViewController: UIViewController {
     
     @IBOutlet weak var teamImage: UIImageView!
     @IBOutlet weak var teamName: UILabel!
-    @IBOutlet weak var playerOneNum: UILabel!
-    @IBOutlet weak var playerOneName: UILabel!
-    @IBOutlet weak var playerTwoNum: UILabel!
-    @IBOutlet weak var playerTwoName: UILabel!
-    @IBOutlet weak var playerThreeNum: UILabel!
-    @IBOutlet weak var playerThreeName: UILabel!
-    @IBOutlet weak var playerFourNum: UILabel!
-    @IBOutlet weak var playerFourName: UILabel!
-    @IBOutlet weak var playerFiveNum: UILabel!
-    @IBOutlet weak var playerFiveName: UILabel!
-    @IBOutlet weak var playerSixNum: UILabel!
-    @IBOutlet weak var playerSixName: UILabel!
-    @IBOutlet weak var playerSevenNum: UILabel!
-    @IBOutlet weak var playerSevenName: UILabel!
-    @IBOutlet weak var playerEightNum: UILabel!
-    @IBOutlet weak var playerEightName: UILabel!
-    @IBOutlet weak var playerNineNum: UILabel!
-    @IBOutlet weak var playerNineName: UILabel!
-    @IBOutlet weak var playerTenNum: UILabel!
-    @IBOutlet weak var playerTenName: UILabel!
-    @IBOutlet weak var playerTwelveNum: UILabel!
-    @IBOutlet weak var playerTwelveName: UILabel!
     @IBOutlet weak var coachName: UILabel!
-    
-    @IBOutlet weak var substituationTableVIew: UITableView!
+    @IBOutlet weak var playerTableVIew: UITableView!
+    @IBOutlet weak var noDataImage: UIImageView!
     
     var teamDetailsViewModel : TeamDetailsViewModel!
+    var players: [Player] = []
+    var injured: [Player] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       let team = teamDetailsViewModel.getTheTeam()
-        
-        teamImage.kf.setImage(with: team.logo)
-        teamName.text = team.name
-        
-        team.lineup?.startingLineups?.forEach{ player in
-            switch player.playerPosition {
-            case 1 :
-                self.playerOneNum.text = String(player.playerNumber!)
-                self.playerOneName.text = player.player
-            case 2 :
-                self.playerTwoNum.text = String(player.playerNumber!)
-                self.playerTwoName.text = player.player
-            case 3 :
-                self.playerThreeNum.text = String(player.playerNumber!)
-                self.playerThreeName.text = player.player
-            case 4 :
-                self.playerFourNum.text = String(player.playerNumber!)
-                self.playerFourName.text = player.player
-            case 5 :
-                self.playerFiveNum.text = String(player.playerNumber!)
-                self.playerFiveName.text = player.player
-            case 6 :
-                self.playerSixNum.text = String(player.playerNumber!)
-                self.playerSixName.text = player.player
-            case 7 :
-                self.playerSevenNum.text = String(player.playerNumber!)
-                self.playerSevenName.text = player.player
-            case 8 :
-                self.playerEightNum.text = String(player.playerNumber!)
-                self.playerEightName.text = player.player
-            case 9 :
-                self.playerNineNum.text = String(player.playerNumber!)
-                self.playerNineName.text = player.player
-            case 10 :
-                self.playerTenNum.text = String(player.playerNumber!)
-                self.playerTenName.text = player.player
-            case 11 :
-                self.playerTwelveNum.text = String(player.playerNumber!)
-                self.playerTwelveName.text = player.player
-            default:
-                break
+         
+        let nib = UINib(nibName: "CustomTeamCell", bundle: nil)
+        playerTableVIew.register(nib, forCellReuseIdentifier: "customTeamCell")
+
+        teamDetailsViewModel.bindingTeamDetails = { [weak self] in
+            DispatchQueue.main.async {
+                let team = self?.teamDetailsViewModel.getTheTeam()
+                self?.teamImage.kf.setImage(with: URL(string: team?.teamLogo ?? ""),placeholder: UIImage(named: "cup"))
+                self?.teamImage.layer.cornerRadius = 8
+                self?.coachName.text = team?.coaches?.first?.coachName ?? "No Coach"
+                self?.teamName.text = team?.teamName
+                if let name = team?.teamName{
+                    self?.noDataImage.isHidden = true
+                }
             
+                self?.players = self?.teamDetailsViewModel.getTheTeam()?.players?.filter{ $0.playerInjured == "No"} ?? []
+                self?.injured = self?.teamDetailsViewModel.getTheTeam()?.players?.filter{ $0.playerInjured == "Yes"} ?? []
+                self?.playerTableVIew.reloadData()
             }
         }
-        
-        if let coach = team.lineup?.coaches?.first?.coache {
-            coachName.text = coach
-        } else {
-           
-            coachName.text = "No Coach"
-            
-            let alert = UIAlertController(title: "Alert", message: "No data for this team", preferredStyle: .alert)
-             let ok = UIAlertAction(title: "ok", style: .default) { action in
-                 self.dismiss(animated: true)
-             }
-             alert.addAction(ok)
-            self.present(alert, animated: true)
-        }
-        
-
+  
+        teamDetailsViewModel.loadTeamData()
     }
+    
     
     @IBAction func backBtn(_ sender: Any) {
         self.dismiss(animated: true)
@@ -120,40 +62,75 @@ class TeamDetailsViewController: UIViewController {
 
 extension TeamDetailsViewController : UITableViewDelegate , UITableViewDataSource{
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if teamDetailsViewModel.getTheTeam().lineup?.substitutes?.count == 0 {
-            tableView.isHidden = true
-            return 0
-        }else{
-            tableView.isHidden = false
-            return teamDetailsViewModel.getTheTeam().lineup?.substitutes?.count ?? 0
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Team Players"
+        case 1:
+            return "Injured Players"
+        default:
+            break
         }
-       
+        return nil
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 35))
+        headerView.backgroundColor = .background
+    
+        let headerLabel = UILabel(frame: CGRect(x: 15, y: -8, width: tableView.frame.width, height: 35))
+        
+        headerLabel.font = UIFont(name: "Baskerville", size: 20)
+        headerLabel.textColor = UIColor.white
+        headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
+
+        headerView.addSubview(headerLabel)
+        return headerView
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+                
+        switch section{
+        case 0:
+            return players.count
+        case 1:
+            return injured.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell  = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let currentPlayer = teamDetailsViewModel.getTheTeam().lineup?.substitutes?[indexPath.row]
+        let cell  = tableView.dequeueReusableCell(withIdentifier: "customTeamCell", for: indexPath) as! CustomTeamCell
         
-        let playerNum : UILabel = cell.contentView.viewWithTag(1) as! UILabel
+        var currentPlayer: Player?
+   
         
-        if let playerNumber = currentPlayer?.playerNumber {
-            playerNum.text = String(playerNumber)
-        } else {
-            playerNum.text = ""
-        }
-        let playerName : UILabel = cell.contentView.viewWithTag(2) as! UILabel
-        if let playerNam = currentPlayer?.player {
+        switch indexPath.section{
+        case 0 :
+            currentPlayer = players[indexPath.row]
+        
+        case 1 :
+            currentPlayer = injured[indexPath.row]
             
-            playerName.text = playerNam
-        } else {
-            playerName.text = ""
+        default:
+            break
         }
+        
+        cell.playerImage.kf.setImage(with: URL(string :currentPlayer?.playerImage ?? "") , placeholder: UIImage(named: "player"))
+        cell.playerImage.layer.cornerRadius = cell.playerImage.bounds.height / 2
+        cell.playerNum.text = currentPlayer?.playerNumber
+        cell.playerPosition.text = currentPlayer?.playerType
+        cell.playerInjured.isHidden = (currentPlayer?.playerInjured == "No")
+        cell.playerInjured.layer.cornerRadius = cell.playerInjured.bounds.height / 2
+        cell.playerName.text = currentPlayer?.playerName
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     
