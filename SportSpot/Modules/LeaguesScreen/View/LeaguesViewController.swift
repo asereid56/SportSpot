@@ -10,8 +10,6 @@ import Kingfisher
 class LeaguesViewController: UIViewController {
     
     
-    //  var sportType: SportType!
-    
     @IBOutlet weak var myTableView: UITableView!
     
     var indicator: UIActivityIndicatorView!
@@ -19,6 +17,8 @@ class LeaguesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        navigationController?.navigationBar.tintColor = UIColor.systemYellow
         let nib = UINib(nibName: "CustomLeaguesTableViewCell", bundle: nil)
         myTableView.register(nib, forCellReuseIdentifier: "cell")
         
@@ -28,19 +28,7 @@ class LeaguesViewController: UIViewController {
         indicator.center = view.center
         view.addSubview(indicator)
         indicator.startAnimating()
-        
-        
-        //        let result = leaguesViewModel?.resultToSearch
-        //        switch result {
-        //
-        //        case 1:
-        //            sportType = .basketball
-        //        case 2:
-        //            sportType = .tennis
-        //        case 3:
-        //            sportType = .cricket
-        //        default:
-        //            sportType = .football
+  
         if let sportType = leaguesViewModel?.getSportType(){
             leaguesViewModel?.loadLeagues(from: sportType)
         }
@@ -52,9 +40,7 @@ class LeaguesViewController: UIViewController {
         
     }
     
-    
-    
-    
+
     
     
     func getLeagueViewModel() -> PassSportsType{
@@ -97,7 +83,7 @@ extension LeaguesViewController : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        var details =  (storyboard?.instantiateViewController(withIdentifier: "leagueDetails") as? LeagueDetailsViewController)!
+        let details =  (storyboard?.instantiateViewController(withIdentifier: "leagueDetails") as? LeagueDetailsViewController)!
         let leagueDetailsViewModel = details.getLeagueViewModel()
 
         let league = leaguesViewModel?.getFootballLeaguesResult()[indexPath.row]

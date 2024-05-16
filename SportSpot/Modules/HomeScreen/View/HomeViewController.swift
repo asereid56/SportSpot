@@ -32,9 +32,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.bounds.size.width - 20) / 2
-        let height = width
-        return CGSize(width: 190, height: 130)
+        let width = (collectionView.frame.width - 10) / 2
+        let height = width * 1.4
+        return CGSize(width: width, height: height)
     }
 }
 
@@ -51,11 +51,10 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
         
         cell.sportImage.image = UIImage(named: sport.imgName)
             
-//        let width = (collectionView.bounds.size.width - 16) / 2
-//        cell?.sportImage.frame.size = CGSize(width: width - 8, height: width - 24)
+
         cell.layer.cornerRadius = 15
         cell.layer.masksToBounds = true
-        return cell //?? collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath)
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

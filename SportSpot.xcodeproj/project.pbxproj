@@ -42,7 +42,6 @@
 		4ABA6F542BF4D04800945192 /* LeaguesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA6F532BF4D04800945192 /* LeaguesViewController.swift */; };
 		4AC4D2542BF0154800793395 /* LeagueDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4D2532BF0154800793395 /* LeagueDetailsViewController.swift */; };
 		4AF4B77A2BEE935E00873245 /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B7792BEE935E00873245 /* Sport.swift */; };
-		4AF4B7812BEE95C400873245 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B7802BEE95C400873245 /* HomeCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,7 +98,6 @@
 		4ABA6F532BF4D04800945192 /* LeaguesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaguesViewController.swift; sourceTree = "<group>"; };
 		4AC4D2532BF0154800793395 /* LeagueDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueDetailsViewController.swift; sourceTree = "<group>"; };
 		4AF4B7792BEE935E00873245 /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
-		4AF4B7802BEE95C400873245 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,7 +366,6 @@
 			isa = PBXGroup;
 			children = (
 				4A06ED422BDD8084000DE860 /* HomeViewController.swift */,
-				4AF4B7802BEE95C400873245 /* HomeCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -532,7 +529,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A7C6ED12BEEC00700575660 /* NetworkService.swift in Sources */,
-				4AF4B7812BEE95C400873245 /* HomeCollectionViewCell.swift in Sources */,
 				4ABA6F512BF4CEED00945192 /* HomeViewCell.swift in Sources */,
 				4ABA6F542BF4D04800945192 /* LeaguesViewController.swift in Sources */,
 				4A06ED432BDD8084000DE860 /* HomeViewController.swift in Sources */,
