@@ -15,6 +15,8 @@ protocol PassLeagueDetails {
 class LeagueDetailsViewModel: PassLeagueDetails{
     
     private var network : Servicing
+    private var db : LocalDB
+    
     var bindUpcomingEventsToViewController : (()->()) = {}
     var bindLatestEventsToViewController : (()->()) = {}
 
@@ -23,10 +25,13 @@ class LeagueDetailsViewModel: PassLeagueDetails{
     private var teamsDetails : [TeamDetails] = []
     
     private var sportType: SportType?
-    private var leagueId : Int?
+    private var leagueId: Int?
+    
+    private var league: League?
 
-    init(network: Servicing) {
+    init(network: Servicing, db: LocalDB) {
         self.network = network
+        self.db = db
     }
 
     private func loadLeaguesFixtures(from sportType: SportType, for id:Int, fromDate: String, toDate: String, complation:@escaping (Data)->Void ){
@@ -86,6 +91,21 @@ class LeagueDetailsViewModel: PassLeagueDetails{
         self.sportType = sportType
     }
     
+    func deleteFav(complation: (Bool)->()) {
+        let result = db.deleteFromCoreData(league: league!)
+        complation(result)
+    }
+    
+    func addToFav(complation: (Bool)->()) {
+        let result = db.saveCoreData(league: league!)
+        complation(result)
+    }
+    
+    func isFavLeague(complation: (Bool)->()){
+        let result = db.searchFromCoreData(league: league!)
+        complation(result)
+    }
+    
     func getSportType() -> SportType {
         return sportType ?? .football
     }
@@ -104,16 +124,18 @@ class LeagueDetailsViewModel: PassLeagueDetails{
     
     func loadTeamsDetails() {
         
-            for item in (latestEvents ?? [] ) + (upcomingEvents ?? []) {
+        let array = (latestEvents ?? [] ) + (upcomingEvents ?? [])
+            for item in array{
                 if teamsDetails.first(where: { $0.key == item.homeTeamKey }) == nil {
                     teamsDetails.append(TeamDetails(key: item.homeTeamKey, name: item.eventHomeTeam, logo: item.homeTeamLogo, lineup: item.lineups?.homeTeam))
                 }
                 if teamsDetails.first(where: { $0.key == item.awayTeamKey }) == nil {
                     teamsDetails.append(TeamDetails(key: item.awayTeamKey, name: item.eventAwayTeam, logo: item.awayTeamLogo, lineup: item.lineups?.awayTeam))
                 }
-            
         }
         print(teamsDetails)
+        
+        league = League(leagueKey: leagueId!, leagueName: array.first?.leagueName ?? "", countryKey: array.first?.eventCountryKey, countryName: array.first?.countryName, leagueLogo: array.first?.leagueLogo, countryLogo: array.first?.countryLogo, leagueYear: nil, sportType: sportType?.rawValue)
     }
 
     func getTeams() -> [TeamDetails]{

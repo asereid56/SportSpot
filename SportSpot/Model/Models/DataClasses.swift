@@ -17,7 +17,7 @@ struct Response<T:Codable>: Codable {
     }
 }
 
-struct League:Codable {
+struct League: Codable {
     let leagueKey: Int
     let leagueName: String
     let countryKey: Int?
@@ -25,6 +25,7 @@ struct League:Codable {
     let leagueLogo: URL?
     let countryLogo: URL?
     let leagueYear: String?
+    let sportType: String?
 
     enum CodingKeys: String, CodingKey {
         case leagueKey = "league_key"
@@ -34,6 +35,7 @@ struct League:Codable {
         case leagueLogo = "league_logo"
         case countryLogo = "country_logo"
         case leagueYear = "league_year"
+        case sportType
     }
 }
 

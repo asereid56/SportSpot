@@ -46,6 +46,10 @@ class LeagueDetailsViewController: UIViewController {
                     self?.leagueDetailsName.text = self?.leagueDetailsViewModel?.getUpcomingEvents().first?.leagueName
                 }
                 
+                self?.leagueDetailsViewModel?.isFavLeague { isFav in
+                    print("isFav")
+                }
+
                 self?.myCollectionView.reloadData()
             }
         }
@@ -64,7 +68,13 @@ class LeagueDetailsViewController: UIViewController {
     }
     
     @IBAction func favBtn(_ sender: Any) {
-        
+        leagueDetailsViewModel?.isFavLeague{ isFav in
+            if isFav {
+                leagueDetailsViewModel?.deleteFav{ print("deleteFav: \($0)") }
+            }else {
+                leagueDetailsViewModel?.addToFav{ print("addToFav: \($0)") }
+            }
+        }
     }
     
     @IBAction func backBtn(_ sender: Any) {
@@ -75,7 +85,7 @@ class LeagueDetailsViewController: UIViewController {
         if let leagueDetailsViewModel{
             return leagueDetailsViewModel
         }else{
-            leagueDetailsViewModel = LeagueDetailsViewModel(network: NetworkService())
+            leagueDetailsViewModel = LeagueDetailsViewModel(network: NetworkService(),db: DataBase(persistentContainer: (UIApplication.shared.delegate as! AppDelegate).persistentContainer))
             return leagueDetailsViewModel!
         }
     }
