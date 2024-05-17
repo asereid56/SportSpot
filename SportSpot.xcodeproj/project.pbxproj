@@ -37,7 +37,6 @@
 		4A7C6ECF2BEEBD3700575660 /* DataClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C6ECE2BEEBD3700575660 /* DataClasses.swift */; };
 		4A7C6ED12BEEC00700575660 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C6ED02BEEC00700575660 /* NetworkService.swift */; };
 		4A7C6ED32BEEC50D00575660 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4A7C6ED22BEEC50D00575660 /* Alamofire */; };
-		4A7C6ED52BEEC50D00575660 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 4A7C6ED42BEEC50D00575660 /* AlamofireDynamic */; };
 		4A7C6ED72BEEC67A00575660 /* LeaguesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C6ED62BEEC67A00575660 /* LeaguesViewModel.swift */; };
 		4A7C6EDA2BEECF5800575660 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 4A7C6ED92BEECF5800575660 /* Kingfisher */; };
 		4A7C6EDC2BEED89F00575660 /* HomeScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7C6EDB2BEED89F00575660 /* HomeScreenViewModel.swift */; };
@@ -119,7 +118,6 @@
 				4A7C6EDA2BEECF5800575660 /* Kingfisher in Frameworks */,
 				4A18CF492BF65E19007DFC0A /* Reachability in Frameworks */,
 				4A7C6ED32BEEC50D00575660 /* Alamofire in Frameworks */,
-				4A7C6ED52BEEC50D00575660 /* AlamofireDynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +435,6 @@
 			name = SportSpot;
 			packageProductDependencies = (
 				4A7C6ED22BEEC50D00575660 /* Alamofire */,
-				4A7C6ED42BEEC50D00575660 /* AlamofireDynamic */,
 				4A7C6ED92BEECF5800575660 /* Kingfisher */,
 				4A18CF482BF65E19007DFC0A /* Reachability */,
 			);
@@ -781,6 +778,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -809,6 +807,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -870,6 +869,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S279569A3K;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = asereid.SportSpotUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -888,6 +888,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S279569A3K;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = asereid.SportSpotUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -976,11 +977,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4A7C6ECA2BEEBC7000575660 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		4A7C6ED42BEEC50D00575660 /* AlamofireDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4A7C6ECA2BEEBC7000575660 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = AlamofireDynamic;
 		};
 		4A7C6ED92BEECF5800575660 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

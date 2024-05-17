@@ -32,9 +32,7 @@ class FavoriteViewModel {
         return false
     }
     
-    func passValueToLeagueDetailsScreen(at : Int ,leagueDetailsViewModel : PassLeagueDetails){
-        let league = leagues![at]
-        
+    func passValueToLeagueDetailsScreen(league : League ,leagueDetailsViewModel : PassLeagueDetails){
         leagueDetailsViewModel.passLeagueIdToleagueDetailsScreen(value: league)
     }
 }

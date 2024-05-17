@@ -170,8 +170,21 @@ extension FavoriteLeaguesViewController : UITableViewDelegate , UITableViewDataS
             let details =  (storyboard?.instantiateViewController(withIdentifier: "leagueDetails") as? LeagueDetailsViewController)!
             let leagueDetailsViewModel = details.getLeagueViewModel()
             
+            var league : League?
+            switch indexPath.section {
+            case 0:
+                league = self.football[indexPath.row]
+            case 1:
+                league = self.basketball[indexPath.row]
+            case 2:
+                league = self.tennis[indexPath.row]
+            case 3:
+                league = self.cricket[indexPath.row]
+            default:
+                break
+            }
             
-            favoriteViewModel?.passValueToLeagueDetailsScreen(at: indexPath.row, leagueDetailsViewModel: leagueDetailsViewModel)
+            favoriteViewModel?.passValueToLeagueDetailsScreen(league: league!, leagueDetailsViewModel: leagueDetailsViewModel)
             
             self.present(details, animated: true)
         }else{
